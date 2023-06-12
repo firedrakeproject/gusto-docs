@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           name: github-pages
-          path: /__w/firedrakeproject.github.io/gusto-docs/docs/build/html
+          path: /__w/gusto-docs/gusto-docs/docs/build/html
           retention-days: 1
   deploy:
     name: Deploy Github pages
