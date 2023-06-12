@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     # The docker container to use.
     container:
-      image: firedrakeproject/firedrake-vanilla:latest
+      image: firedrakeproject/firedrake-docdeps:latest
       options: --user root
       volumes:
         - ${{ github.workspace }}:/home/firedrake/output
@@ -26,19 +26,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: firedrakeproject/gusto
-      - name: Install
+      - name: Install Gusto and NetCDF4
         run: |
           . /home/firedrake/firedrake/bin/activate
           python -m pip install -e .
           python -m pip install netcdf4
-          python -m pip install sphinx
-          python -m pip install sphinx-rtd-theme
-          python -m pip install sphinxcontrib-bibtex
-          python -m pip install sphinxcontrib-svg2pdfconverter
-          python -m pip install sphinxcontrib-jquery
-          python -m pip install bibtexparser
-          python -m pip install numpydoc
-          python -m pip install git+https://github.com/sphinx-contrib/youtube.git
       - name: Check documentation links
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
@@ -50,7 +42,6 @@ jobs:
           . /home/firedrake/firedrake/bin/activate
           cd docs
           make html
-          pwd
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
