@@ -30,6 +30,7 @@ jobs:
         run: |
           . /home/firedrake/firedrake/bin/activate
           python -m pip install -e .
+          python -m pip install sphinx_rtd_theme
           python -m pip install netcdf4
       - name: Check documentation links
         if: ${{ github.ref == 'refs/heads/main' }}
