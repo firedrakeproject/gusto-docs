@@ -30,6 +30,7 @@ jobs:
         run: |
           . /home/firedrake/firedrake/bin/activate
           python -m pip install -e .
+          python -m pip install netcdf4
           python -m pip install sphinx
           python -m pip install sphinx-rtd-theme
           python -m pip install sphinxcontrib-bibtex
