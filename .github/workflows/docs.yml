@@ -50,6 +50,7 @@ jobs:
           . /home/firedrake/firedrake/bin/activate
           cd docs
           make html
+          pwd
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
