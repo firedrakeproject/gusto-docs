@@ -29,9 +29,10 @@ jobs:
       - name: Install Gusto and NetCDF4
         run: |
           . /home/firedrake/firedrake/bin/activate
-          python -m pip install -e .
-          python -m pip install sphinx_rtd_theme
-          python -m pip install netcdf4
+          pip install -e .
+          pip install sphinx_rtd_theme
+          pip install netcdf4
+          pip install pandas
       - name: Check documentation links
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
