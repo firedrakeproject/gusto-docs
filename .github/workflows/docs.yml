@@ -49,6 +49,10 @@ jobs:
           name: github-pages
           path: /__w/gusto-docs/gusto-docs/docs/build/html
           retention-days: 1
+      - name: Keep alive commit
+        uses: gautamkrishnar/keepalive-workflow@v1
+        with:
+          time_elapsed: 30
   deploy:
     name: Deploy Github pages
     needs: build_website
