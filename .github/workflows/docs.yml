@@ -49,6 +49,9 @@ jobs:
           name: github-pages
           path: /__w/gusto-docs/gusto-docs/docs/build/html
           retention-days: 1
+      - name: Fix repo permissions
+        run: |
+          git config --global --add safe.directory /__w/gusto-docs/gusto-docs
       - name: Keep alive commit
         uses: gautamkrishnar/keepalive-workflow@v1
         with:
