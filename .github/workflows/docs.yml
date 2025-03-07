@@ -37,13 +37,13 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           . venv-gusto/bin/activate
-          cd docs
+          cd gusto-repo/docs
           make linkcheck
 
       - name: Build docs
         run: |
           . venv-gusto/bin/activate
-          cd docs
+          cd gusto-repo/docs
           make html
 
       - name: Upload artifact
