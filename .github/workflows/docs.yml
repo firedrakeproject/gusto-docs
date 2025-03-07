@@ -31,8 +31,7 @@ jobs:
           : # Pass '--system-site-packages' so already installed packages can be found
           python3 -m venv --system-site-packages venv-gusto
           . venv-gusto/bin/activate
-          pip install ./gusto-repo
-          pip install sphinx_rtd_theme
+          pip install ./gusto-repo[docs]
 
       - name: Check documentation links
         if: ${{ github.ref == 'refs/heads/main' }}
