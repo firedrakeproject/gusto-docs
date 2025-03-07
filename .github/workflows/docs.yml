@@ -12,51 +12,56 @@ on:
 jobs:
   build_website:
     name: Run doc build
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    # The docker container to use.
     container:
       image: firedrakeproject/firedrake-docdeps:latest
       options: --user root
-      volumes:
-        - ${{ github.workspace }}:/home/firedrake/output
-    # Steps represent a sequence of tasks that will be executed as
-    # part of the jobs
+    env:
+      # Since we are running as root we need to set PYTHONPATH to be able to find the installed
+      # packages
+      PYTHONPATH: /home/firedrake/firedrake:/home/firedrake/.local/lib/python3.12/site-packages
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          repository: firedrakeproject/gusto
-      - name: Install Gusto and NetCDF4
+          path: gusto-repo
+
+      - name: Install Gusto
         run: |
-          . /home/firedrake/firedrake/bin/activate
-          pip install -e .
+          : # Pass '--system-site-packages' so already installed packages can be found
+          python3 -m venv --system-site-packages venv-gusto
+          . venv-gusto/bin/activate
+          pip install ./gusto-repo
           pip install sphinx_rtd_theme
-          pip install netcdf4
-          pip install pandas
+
       - name: Check documentation links
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          . /home/firedrake/firedrake/bin/activate
+          . venv-gusto/bin/activate
           cd docs
           make linkcheck
+
       - name: Build docs
         run: |
-          . /home/firedrake/firedrake/bin/activate
+          . venv-gusto/bin/activate
           cd docs
           make html
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
           path: /__w/gusto-docs/gusto-docs/docs/build/html
           retention-days: 1
+
       - name: Fix repo permissions
         run: |
           git config --global --add safe.directory /__w/gusto-docs/gusto-docs
+
       - name: Keep alive commit
         uses: gautamkrishnar/keepalive-workflow@v1
         with:
           time_elapsed: 30
+
   deploy:
     name: Deploy Github pages
     needs: build_website
@@ -71,4 +76,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
