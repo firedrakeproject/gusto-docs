@@ -60,7 +60,7 @@ jobs:
   keepalive-job:
     name: Keepalive Workflow
     if: ${{ always() }}
-    needs: main-job
+    needs: build_website
     runs-on: ubuntu-latest
     permissions:
       contents: write
