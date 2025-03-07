@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: /__w/gusto-docs/gusto-docs/docs/build/html
+          path: /__w/gusto-docs/gusto-docs/gusto-repo/docs/build/html
           retention-days: 1
 
       - name: Fix repo permissions
