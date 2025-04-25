@@ -14,7 +14,7 @@ jobs:
     name: Run doc build
     runs-on: ubuntu-latest
     container:
-      image: image: firedrakeproject/firedrake-vanilla-default:latest
+      image: firedrakeproject/firedrake-vanilla-default:latest
     env:
       # Since we are running as root we need to set PYTHONPATH to be able to find the installed
       # packages
